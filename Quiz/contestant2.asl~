@@ -1,0 +1,32 @@
+// Agent agente_due in project saluti.mas2j
+
+/* Initial beliefs and rules */
+interlocutor(contestant1).
+answer(A).
+answer(B).
+answer(C).
+answer(D).
+answer(E).
+step(1).
+
+/* Initial goals */
+!introduce_my_self.
+
+/* Plans */
++!introduce_my_self : .my_name(Me) <- 
+	.print("Buongiorno sono ", 
+		Me, " e sono pronto a giocare!").
+
++saluti(Msg)[source(Other)] : interlocutor(Other) & step(1) <-
+	.print("Ricevuto da: ", Other, " il messaggio: ", Msg);
+	-step(1); +step(2);
+	!contro_saluto(Other).
+	
++!contro_saluto(Other) : interlocutor(Other) & step(2) <-
+	Msg = "Bene, grazie. E lei?";
+	.send(Other, tell, contro_saluti(Msg));
+	.print("Inviato a: ", Other, " il messaggio: ", Msg);
+	-step(2); +step(3).
+	
++risposta_finale(Msg)[source(Other)] : interlocutor(Other) & step(3) <-
+	.print("Ricevuto da: ", Other, " il messaggio: ", Msg).
