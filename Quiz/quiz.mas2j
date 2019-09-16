@@ -1,0 +1,9 @@
+/* Jason Project */
+
+MAS quiz{
+
+    infrastructure: Centralised
+
+    agents: contestant1; contestant2; contestant3; quizmaster;
+}
+
